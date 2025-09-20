@@ -50,4 +50,4 @@
 ## Getting Started
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/yourusername/calmixy.git
+   git clone https://github.com/aishwanth-dev/clamixy---Hackathon.git
