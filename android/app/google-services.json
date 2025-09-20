@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "381193447563",
+    "project_id": "fir-a79ce",
+    "storage_bucket": "fir-a79ce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381193447563:android:37426ef5cae33128970c8e",
+        "android_client_info": {
+          "package_name": "com.mycompany.CounterApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn50ZBfEUdGTbAxeyULtLZrVFXpMGIZQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

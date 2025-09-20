@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profiles - private to each user
+    match /user_profiles/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Mood entries - private to each user
+    match /mood_entries/{entryId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.user_id;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.user_id;
+    }
+    
+    // Chat conversations - private to each user
+    match /chat_conversations/{conversationId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.user_id;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.user_id;
+    }
+    
+    // Chat messages - private to conversation owner
+    match /chat_conversations/{conversationId}/messages/{messageId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == get(/databases/$(database)/documents/chat_conversations/$(conversationId)).data.user_id;
+      allow create: if request.auth != null && 
+        request.auth.uid == get(/databases/$(database)/documents/chat_conversations/$(conversationId)).data.user_id;
+    }
+    
+    // User progress - private to each user
+    match /user_progress/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Challenge progress - private to each user
+    match /challenge_progress/{progressId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.user_id;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.user_id;
+    }
+    
+    // Wellness challenges - public read, admin write only
+    match /wellness_challenges/{challengeId} {
+      allow read: if true;
+      allow write: if false; // Only admins can create challenges via admin SDK
+    }
+    
+    // Helpline resources - public read
+    match /helpline_resources/{resourceId} {
+      allow read: if true;
+      allow write: if false; // Only admins can manage resources
+    }
+  }
+}
